@@ -36,7 +36,9 @@ class Game extends React.Component {
                     break;
                 }
             }
-            event.preventDefault();
+            if (!this.props.gameComplete && this.props.gameStarted) {
+                event.preventDefault();
+            }
         }
         document.addEventListener('keydown', handleOnKeyPress, false);
 
@@ -59,7 +61,7 @@ class Game extends React.Component {
                 <GameHeaderView gameName={this.props.gameName} />
                 <GameStatusView />
                 <GridView />
-                <DirectionButtonsView onChangeDirection={this.props.onChangeDirection} />
+                <DirectionButtonsView gameStarted={this.props.gameStarted} onChangeDirection={this.props.onChangeDirection} />
                 <LeaderBoardView highScoreList={this.props.highScoreList} />
             </div>
         );
@@ -67,19 +69,28 @@ class Game extends React.Component {
     }
 }
 
+Game.defaultProps = {
+    gameStarted: false,
+    gameComplete: false
+}
+
 Game.propTypes = {
     gameName: PropTypes.string,
     highScoreList: PropTypes.object,
     onInitGame: PropTypes.func,
     onMoveSnake: PropTypes.func,
-    onChangeDirection: PropTypes.func
+    onChangeDirection: PropTypes.func,
+    gameComplete: PropTypes.bool,
+    gameStarted: PropTypes.bool
 };
 
 
 const mapStateToProps = state => {
     return {
         gameName: state.gameName,
-        highScoreList: state.highScoreList
+        highScoreList: state.highScoreList,
+        gameComplete: state.gameComplete,
+        gameStarted: state.gameStarted
     }
 }
 

@@ -40,7 +40,8 @@ export function getNewFoodPos(size, snake) {
 
 
 export function isValidMove(oldDirection, newDirection) {
-    if ((newDirection === Left && oldDirection === Right) ||
+    if (/*(newDirection === oldDirection) ||*/
+        (newDirection === Left && oldDirection === Right) ||
         (newDirection === Right && oldDirection === Left) ||
         (newDirection === Up && oldDirection === Down) ||
         (newDirection === Down && oldDirection === Up)) {
@@ -99,20 +100,29 @@ export function applySnakeAndFoodOnTiles(size, tiles, snake, food) {
 }
 
 
-export function getIndexInHighScoreList(newUserId, userTime, score, highScoreList) {
-    const resultsCopy = highScoreList.results.map(r => {
+function compareScores(a, b) {
+    if (a.score >= b.score) {
+        return -1;
+    }
+    if (a.score < b.score) {
+        return 1;
+    }
+}
+
+export function getIndexInHighScoreList(newUserId, score, highScoreList) {
+    const results = [...highScoreList.results];
+    const resultsCopy = results.map(r => {
         return {
             id: r.id,
-            score: r.score,
-            time: isNaN(Date.parse(r.utcDateTime)) ? 0 : Date.parse(r.utcDateTime)
+            score: r.score
         }
     });
     resultsCopy.push({
         id: newUserId,
-        score,
-        time: userTime
+        score
     });
-    resultsCopy.sort((a, b) => (a.score - b.score) || (b.time - a.time));
+
+    resultsCopy.sort((a, b) => compareScores(a, b));
 
     let idxInHighScoreList = resultsCopy.findIndex(r => r.id === newUserId);
     if (idxInHighScoreList > -1 && (idxInHighScoreList + 1 <= highScoreList.maxSize)) {

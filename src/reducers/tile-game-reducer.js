@@ -10,13 +10,16 @@ import {
     applySnakeAndFoodOnTiles,
     isValidMove,
     getNextHeadPosition,
-    getNewFoodPos
+    getNewFoodPos,
+    getIndexInHighScoreList
 } from './tileset-functions';
 import { gameConfigs } from '../game-configs';
 import { Id_Border, Id_Food, Id_SnakeSegMin, Right } from '../constants';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     points: 0,
+    gameStarted: false,
     gameComplete: false,
     tiles: [],
     size: undefined,
@@ -47,12 +50,13 @@ function tileGame(state = initialState, action) {
                 gameName: gameConfigs[action.gameId].name,
                 imageNumber: action.imageNumber,
                 highScoreListId: gameConfigs[action.gameId].highscorelistid,
-                tiles: generateTileSet(gameConfigs[action.gameId].size, snake, newFoodPos)
+                tiles: generateTileSet(gameConfigs[action.gameId].size, snake, newFoodPos),
+                gameStarted: true
             });
         }
 
         case MOVE_SNAKE: {
-            if (state.gameComplete) {
+            if (state.gameComplete || !state.gameStarted) {
                 return state;
             }
 
@@ -68,6 +72,25 @@ function tileGame(state = initialState, action) {
             const typeOnNextPos = state.tiles[nextPos.y * state.size + nextPos.x];
 
             if ((typeOnNextPos === Id_Border) || (typeOnNextPos >= Id_SnakeSegMin)) {
+                if (state.highScoreList) {
+                    const newUserId = uuidv4();
+                    const idxInHighScoreList = getIndexInHighScoreList(newUserId, state.points, state.highScoreList);
+                    if (idxInHighScoreList > -1) {
+                        // User made it into the leaderboard
+                        return Object.assign({}, state, {
+                            highScorePosition: idxInHighScoreList + 1,
+                            gameComplete: true,
+                            userId: newUserId
+                        });
+                    } else {
+                        // User dit not make it into the leaderboard
+                        return Object.assign({}, state, {
+                            highScorePosition: idxInHighScoreList + 1,
+                            gameComplete: true,
+                        });
+                    }
+                }
+
                 return Object.assign({}, state, { gameComplete: true });
             }
 

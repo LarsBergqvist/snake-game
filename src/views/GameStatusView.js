@@ -9,6 +9,11 @@ import { initGame } from '../reducers/actions';
 import { fetchHighScoreList } from '../reducers/thunks';
 
 const GameStatus = (props) => {
+    if (!props.gameStarted) {
+        return <div>
+            <button className='game-button' onClick={() => props.onInitGame(GameId_3x3)}>Start game</button>
+        </div>
+    }
     if (props.gameComplete) {
         return <div className='game-status'>
             <div><b>GAME OVER!</b></div>
@@ -29,11 +34,15 @@ const GameStatus = (props) => {
             Score: <b>{props.points}</b>
             <div className='game-instructions'>
                 <div>
-                    Use arrow keys or buttons to change direction
+                    Use swipe, arrow keys or buttons to change direction
                 </div>
             </div>
         </div>
     }
+}
+
+GameStatus.defaultProps = {
+    gameStarted: false
 }
 
 GameStatus.propTypes = {
@@ -43,7 +52,8 @@ GameStatus.propTypes = {
     highScoreListSaved: PropTypes.bool,
     highScoreList: PropTypes.object,
     userId: PropTypes.string,
-    onInitGame: PropTypes.func
+    onInitGame: PropTypes.func,
+    gameStarted: PropTypes.bool
 };
 
 const mapStateToProps = state => {
@@ -53,7 +63,8 @@ const mapStateToProps = state => {
         highScorePosition: state.highScorePosition,
         highScoreListSaved: state.highScoreListSaved,
         highScoreList: state.highScoreList,
-        userId: state.userId
+        userId: state.userId,
+        gameStarted: state.gameStarted
     }
 }
 

@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import tileGame from './reducers/tile-game-reducer';
-import { fetchHighScoreList } from './reducers/thunks'
-import { initGame } from './reducers/actions';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import { GameId_3x3 } from './constants';
 import GameView from './views/GameView';
 
 // For integration with Redux DevTools in browser
@@ -17,8 +14,6 @@ const store = createStore(tileGame, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
-store.dispatch(initGame(GameId_3x3));
-store.dispatch(fetchHighScoreList);
 ReactDOM.render(
     <Provider store={store}>
         <GameView />

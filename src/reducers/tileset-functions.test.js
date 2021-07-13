@@ -1,55 +1,34 @@
 import { getIndexInHighScoreList } from './tileset-functions';
 
-test('Highscore position comparing without dates', () => {
+test('Highscore position user should make it to leaderboard', () => {
     const highScoreList = {
         maxSize: 10,
         results: [
-            { id: 'user1', score: 2 },
-            { id: 'user2', score: 3 }
+            { id: 'user1', score: 5 },
+            { id: 'user2', score: 4 },
+            { id: 'user3', score: 4 },
+            { id: 'user3', score: 4 },
+            { id: 'user4', score: 2 }
         ]
     }
 
-    expect(getIndexInHighScoreList('user3', undefined, 1, highScoreList)).toBe(0);
-    expect(getIndexInHighScoreList('user3', undefined, 4, highScoreList)).toBe(2);
+    expect(getIndexInHighScoreList('user5', 6, highScoreList)).toBe(0);
+    expect(getIndexInHighScoreList('user5', 5, highScoreList)).toBe(0);
+    expect(getIndexInHighScoreList('user5', 4, highScoreList)).toBe(1);
+    expect(getIndexInHighScoreList('user5', 2, highScoreList)).toBe(4);
+    expect(getIndexInHighScoreList('user5', 1, highScoreList)).toBe(5);
 });
+
 
 test('Highscore position outside max size', () => {
     const highScoreList = {
         maxSize: 2,
         results: [
-            { id: 'user1', score: 2 },
-            { id: 'user2', score: 3 }
+            { id: 'user1', score: 3 },
+            { id: 'user2', score: 2 }
         ]
     }
 
-    expect(getIndexInHighScoreList('user3', undefined, 4, highScoreList)).toBe(-1);
+    expect(getIndexInHighScoreList('user3', 1, highScoreList)).toBe(-1);
 });
 
-test('Highscore position comparing with dates', () => {
-    const highScoreList = {
-        maxSize: 10,
-        results: [
-            { id: 'user1', score: 2, utcDateTime: '2010-01-01' },
-            { id: 'user2', score: 3, utcDateTime: '2010-01-02' }
-        ]
-    }
-
-    // Same score as user2 but newer Date. Place before user2.
-    expect(getIndexInHighScoreList('user3', (new Date(2010, 2, 2)).getTime(), 3, highScoreList)).toBe(1);
-
-    // Same score as user2 older Date. Place after user2.
-    expect(getIndexInHighScoreList('user3', (new Date(2009, 1, 2)).getTime(), 3, highScoreList)).toBe(2);
-});
-
-test('Highscore position when old results have no dates', () => {
-    const highScoreList = {
-        maxSize: 10,
-        results: [
-            { id: 'user1', score: 2 },
-            { id: 'user2', score: 3 }
-        ]
-    }
-
-    // Same score as user2 but user3 has Date. Place before user2.
-    expect(getIndexInHighScoreList('user3', (new Date(2010, 2, 2)).getTime(), 3, highScoreList)).toBe(1);
-});

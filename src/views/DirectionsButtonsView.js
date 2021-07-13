@@ -3,8 +3,11 @@ import './Game.css';
 import PropTypes from 'prop-types';
 import { Down, Left, Right, Up } from '../constants';
 
-const DirectionButtonsView = (props) =>
-    <>
+const DirectionButtonsView = (props) => {
+    if (!props.gameStarted) {
+        return <></>;
+    }
+    return <>
         <table className='tile-wrapper'>
             <tbody>
                 <tr>
@@ -12,7 +15,7 @@ const DirectionButtonsView = (props) =>
 
                     </td>
                     <td>
-                        <button className='game-button' onClick={() => props.onChangeDirection(Up)}>Up</button>
+                        <button className='control-button' onClick={() => props.onChangeDirection(Up)}>U</button>
 
                     </td>
                     <td>
@@ -21,14 +24,14 @@ const DirectionButtonsView = (props) =>
                 </tr>
                 <tr>
                     <td>
-                        <button className='game-button' onClick={() => props.onChangeDirection(Left)}>Left</button>
+                        <button className='control-button' onClick={() => props.onChangeDirection(Left)}>L</button>
 
                     </td>
                     <td>
 
                     </td>
                     <td>
-                        <button className='game-button' onClick={() => props.onChangeDirection(Right)}>Right</button>
+                        <button className='control-button' onClick={() => props.onChangeDirection(Right)}>R</button>
 
                     </td>
 
@@ -38,7 +41,7 @@ const DirectionButtonsView = (props) =>
 
                     </td>
                     <td>
-                        <button className='game-button' onClick={() => props.onChangeDirection(Down)}>Down</button>
+                        <button className='control-button' onClick={() => props.onChangeDirection(Down)}>D</button>
 
                     </td>
                     <td>
@@ -51,8 +54,11 @@ const DirectionButtonsView = (props) =>
         </table>
     </>;
 
+}
+
 DirectionButtonsView.propTypes = {
-    onChangeDirection: PropTypes.func
+    onChangeDirection: PropTypes.func,
+    gameStarted: PropTypes.bool
 };
 
 export default DirectionButtonsView;

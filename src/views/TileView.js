@@ -15,7 +15,9 @@ TileView.propTypes = {
 const getStyleForTile = (id) => {
     if (id === Id_Empty) {
         return {
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            outline: '1px solid lightgray',
+            outlineOffset: '-1px'
         };
     } else if (id >= Id_SnakeSegMin) {
         let a = Math.max(0.2, 1.0 / (id - 2))
