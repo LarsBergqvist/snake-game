@@ -5,14 +5,8 @@ import {
     HIGHSCORE_LIST_SAVED,
     MOVE_SNAKE
 } from './actions';
-import {
-    generateTileSet,
-    applySnakeAndFoodOnTiles,
-    isValidMove,
-    getNextHeadPosition,
-    getNewFoodPos,
-    getIndexInHighScoreList
-} from './tileset-functions';
+import { getIndexInHighScoreList } from './highscore-functions';
+import { generateGrid, isValidMove, getNextHeadPosition, getNewFoodPos } from './grid-functions';
 import { gameConfigs } from '../game-configs';
 import { Id_Border, Id_Food, Id_SnakeSegMin, Right } from '../constants';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,26 +15,30 @@ const initialState = {
     points: 0,
     gameStarted: false,
     gameComplete: false,
-    tiles: [],
+    gridViewModel: [],
     size: undefined,
     gameId: undefined,
     gameName: undefined,
+    direction: Right,
+    snake: undefined,
+    food: undefined,
     highScoreList: undefined,
     highScorePosition: -1,
     userName: undefined,
     userId: undefined,
     highScoreListSaved: false,
-    direction: Right,
-    snake: [{ x: 13, y: 15 }, { x: 12, y: 15 }, { x: 11, y: 15 }, { x: 10, y: 15 }]
 };
 
 
+//
 // The reducer for the game
-function tileGame(state = initialState, action) {
+//
+function snakeGame(state = initialState, action) {
     switch (action.type) {
         case INIT_GAME: {
             const size = gameConfigs[action.gameId].size;
-            const snake = [...state.snake];
+            const snakeTemplate = [{ x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 5 }];
+            const snake = snakeTemplate.map(t => ({ x: t.x + 1, y: size / 2 }));
             const newFoodPos = getNewFoodPos(size, snake);
             return Object.assign({}, initialState, {
                 gameId: action.gameId,
@@ -49,8 +47,9 @@ function tileGame(state = initialState, action) {
                 imageNumber: action.imageNumber,
                 highScoreListId: gameConfigs[action.gameId].highscorelistid,
                 food: newFoodPos,
-                tiles: generateTileSet(gameConfigs[action.gameId].size, snake, newFoodPos),
-                gameStarted: true
+                gridViewModel: generateGrid(gameConfigs[action.gameId].size, snake, newFoodPos),
+                gameStarted: true,
+                snake
             });
         }
 
@@ -64,16 +63,19 @@ function tileGame(state = initialState, action) {
                 if (isValidMove(state.direction, action.direction)) {
                     direction = action.direction;
                 } else {
-                    console.log('not valid move')
                     return state;
                 }
             }
             const snake = [...state.snake];
             const nextPos = getNextHeadPosition(direction, snake[0]);
 
-            const typeOnNextPos = state.tiles[nextPos.y * state.size + nextPos.x];
+            const typeOnNextPos = state.gridViewModel[nextPos.y * state.size + nextPos.x];
 
             if ((typeOnNextPos === Id_Border) || (typeOnNextPos >= Id_SnakeSegMin)) {
+                //
+                // Snake moved into border or into itself
+                //
+
                 if (state.highScoreList) {
                     const newUserId = uuidv4();
                     const idxInHighScoreList = getIndexInHighScoreList(newUserId, state.points, state.highScoreList);
@@ -99,17 +101,19 @@ function tileGame(state = initialState, action) {
             let points = state.points;
             const foodWasTaken = typeOnNextPos === Id_Food;
             if (!foodWasTaken) {
+                // Remove the first segment of the snake
                 snake.pop();
             } else {
                 points++;
             }
 
+            // Insert the new pos as the first segment
             snake.unshift(nextPos);
 
             let food = foodWasTaken ? getNewFoodPos(state.size, snake) : Object.assign({}, state.food);
 
-            const newTiles = applySnakeAndFoodOnTiles(state.size, [...state.tiles], snake, food);
-            return Object.assign({}, state, { snake, tiles: newTiles, food, points, direction });
+            const newTiles = generateGrid(state.size, snake, food);
+            return Object.assign({}, state, { snake, gridViewModel: newTiles, food, points, direction });
         }
         case HIGHSCORE_LIST_LOADED: {
             return Object.assign({}, state, {
@@ -132,4 +136,4 @@ function tileGame(state = initialState, action) {
     }
 }
 
-export default tileGame;
+export default snakeGame;

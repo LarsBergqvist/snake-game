@@ -1,4 +1,4 @@
-import { getIndexInHighScoreList } from './tileset-functions';
+import { getIndexInHighScoreList } from './highscore-functions';
 
 test('Highscore position user should make it to leaderboard', () => {
     const highScoreList = {

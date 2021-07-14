@@ -35,7 +35,7 @@ const Grid = (props) => {
         <div {...handlers} className='tile-wrapper' style={tileWrapperStyle}>
             <div className='tile-container' style={tileContainerStyle}>
                 {
-                    props.tiles.map((t, idx) => {
+                    props.gridViewModel.map((t, idx) => {
                         return <TileView key={idx}
                             id={t}
                         />
@@ -49,7 +49,7 @@ const Grid = (props) => {
 Grid.propTypes = {
     onTileClicked: PropTypes.func,
     size: PropTypes.number,
-    tiles: PropTypes.array,
+    gridViewModel: PropTypes.array,
     imageNumber: PropTypes.number,
     onChangeDirection: PropTypes.func
 };
@@ -57,7 +57,7 @@ Grid.propTypes = {
 const mapStateToProps = state => {
     return {
         imageNumber: state.imageNumber,
-        tiles: state.tiles,
+        gridViewModel: state.gridViewModel,
         size: state.size,
     }
 }

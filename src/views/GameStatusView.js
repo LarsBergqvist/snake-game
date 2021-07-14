@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import LeaderBoardView from './LeaderBoardView';
 import EnterNameView from './EnterNameView';
 import PropTypes from 'prop-types';
-import { GameId_3x3 } from '../constants';
+import { GameId_Medium } from '../constants';
 import { initGame } from '../reducers/actions';
 import { fetchHighScoreList } from '../reducers/thunks';
 
 const GameStatus = (props) => {
     if (!props.gameStarted) {
         return <div>
-            <button className='game-button' onClick={() => props.onInitGame(GameId_3x3)}>Start game</button>
+            <button className='game-button' onClick={() => props.onInitGame(GameId_Medium)}>Start game</button>
         </div>
     }
     if (props.gameComplete) {
@@ -27,7 +27,7 @@ const GameStatus = (props) => {
                     userId={props.userId}
                 />
             }
-            <button className='game-button' onClick={() => props.onInitGame(GameId_3x3)}>Restart</button>
+            <button className='game-button' onClick={() => props.onInitGame(GameId_Medium)}>Restart</button>
         </div>;
     } else {
         return <div className='game-status'>

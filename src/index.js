@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import tileGame from './reducers/tile-game-reducer';
+import snakeGame from './reducers/snake-game-reducer';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
@@ -10,7 +10,7 @@ import GameView from './views/GameView';
 
 // For integration with Redux DevTools in browser
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(tileGame, composeEnhancers(
+const store = createStore(snakeGame, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
