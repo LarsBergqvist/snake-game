@@ -7,9 +7,7 @@ import { Down, Left, Right, Up } from '../constants';
 import { fetchHighScoreList } from '../reducers/thunks';
 import GridView from './GridView';
 import PropTypes from 'prop-types';
-import LeaderBoardView from './LeaderBoardView';
 import GameHeaderView from './GameHeaderView';
-import DirectionButtonsView from './DirectionsButtonsView';
 
 class Game extends React.Component {
 
@@ -61,8 +59,6 @@ class Game extends React.Component {
                 <GameHeaderView gameName={this.props.gameName} />
                 <GameStatusView />
                 <GridView />
-                <DirectionButtonsView gameStarted={this.props.gameStarted} onChangeDirection={this.props.onChangeDirection} />
-                <LeaderBoardView highScoreList={this.props.highScoreList} />
             </div>
         );
 

@@ -31,10 +31,7 @@ const initialState = {
     userId: undefined,
     highScoreListSaved: false,
     direction: Right,
-    snake: [{ x: 13, y: 15 }, { x: 12, y: 15 }, { x: 11, y: 15 }, { x: 10, y: 15 }],
-    food: {
-        x: 18, y: 16
-    }
+    snake: [{ x: 13, y: 15 }, { x: 12, y: 15 }, { x: 11, y: 15 }, { x: 10, y: 15 }]
 };
 
 
@@ -42,14 +39,16 @@ const initialState = {
 function tileGame(state = initialState, action) {
     switch (action.type) {
         case INIT_GAME: {
+            const size = gameConfigs[action.gameId].size;
             const snake = [...state.snake];
-            const newFoodPos = getNewFoodPos(state.size, snake);
+            const newFoodPos = getNewFoodPos(size, snake);
             return Object.assign({}, initialState, {
                 gameId: action.gameId,
-                size: gameConfigs[action.gameId].size,
+                size,
                 gameName: gameConfigs[action.gameId].name,
                 imageNumber: action.imageNumber,
                 highScoreListId: gameConfigs[action.gameId].highscorelistid,
+                food: newFoodPos,
                 tiles: generateTileSet(gameConfigs[action.gameId].size, snake, newFoodPos),
                 gameStarted: true
             });
@@ -64,6 +63,9 @@ function tileGame(state = initialState, action) {
             if (action.direction) {
                 if (isValidMove(state.direction, action.direction)) {
                     direction = action.direction;
+                } else {
+                    console.log('not valid move')
+                    return state;
                 }
             }
             const snake = [...state.snake];

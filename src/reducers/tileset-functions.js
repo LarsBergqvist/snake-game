@@ -1,15 +1,5 @@
 import { Down, Id_Border, Id_Empty, Id_Food, Id_SnakeSegMin, Left, Right, Up } from '../constants';
 
-//
-// The TileSet is an array of length size*size representing
-// a size*size matrix with unique values [0...(size*size -1)]
-// A tile value/id represents a slice of an image
-// When array[i] === i+1, the tile is correctly positioned in the matrix
-// The value 0 represents a blank tile
-// In the unshuffled TileSet, the blank tile is positioned in the lower
-// right corner
-//
-
 export function generateTileSet(size, snake, food) {
     let newTilesArray = [];
     for (let i = 0; i < size * size; i++) {
@@ -40,7 +30,7 @@ export function getNewFoodPos(size, snake) {
 
 
 export function isValidMove(oldDirection, newDirection) {
-    if (/*(newDirection === oldDirection) ||*/
+    if ((newDirection === oldDirection) ||
         (newDirection === Left && oldDirection === Right) ||
         (newDirection === Right && oldDirection === Left) ||
         (newDirection === Up && oldDirection === Down) ||
