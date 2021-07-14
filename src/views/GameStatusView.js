@@ -6,7 +6,7 @@ import EnterNameView from './EnterNameView';
 import PropTypes from 'prop-types';
 import { GameId_Medium } from '../constants';
 import { initGame } from '../reducers/actions';
-import { fetchHighScoreList } from '../reducers/thunks';
+import { fetchHighScoreList, runGameLoop } from '../reducers/thunks';
 
 const GameStatus = (props) => {
     if (!props.gameStarted) {
@@ -73,6 +73,7 @@ const mapDispatchToProps = dispatch => {
         onInitGame: (gameId) => {
             dispatch(initGame(gameId));
             dispatch(fetchHighScoreList);
+            dispatch(runGameLoop);
         }
     }
 }

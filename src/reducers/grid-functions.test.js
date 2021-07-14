@@ -20,7 +20,7 @@ test('Should generate grid with snake and borders', () => {
 test('Should generate 1 food item', () => {
     const size = 4;
     const snake = [{ x: 1, y: 2 }, { x: 2, y: 2 }];
-    const foodPos = getNewFoodPos(size, snake);
+    const foodPos = getNewFoodPos(size, snake, 0);
     const grid = generateGrid(size, snake, foodPos);
 
     let numFoodFound = 0;

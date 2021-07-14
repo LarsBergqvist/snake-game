@@ -1,10 +1,9 @@
 import React from 'react';
 import './Game.css';
 import { connect } from 'react-redux'
-import { initGame, moveSnake } from '../reducers/actions';
+import { moveSnake } from '../reducers/actions';
 import GameStatusView from './GameStatusView';
 import { Down, Left, Right, Up } from '../constants';
-import { fetchHighScoreList } from '../reducers/thunks';
 import GridView from './GridView';
 import PropTypes from 'prop-types';
 import GameHeaderView from './GameHeaderView';
@@ -39,17 +38,9 @@ class Game extends React.Component {
             }
         }
         document.addEventListener('keydown', handleOnKeyPress, false);
-
-        this.interval = setInterval(() => {
-            this.props.onMoveSnake();
-        }, 100);
-
     }
 
     componentWillUnmount() {
-        if (this.interval) {
-            clearInterval(this.interval);
-        }
     }
 
 
@@ -73,8 +64,6 @@ Game.defaultProps = {
 Game.propTypes = {
     gameName: PropTypes.string,
     highScoreList: PropTypes.object,
-    onInitGame: PropTypes.func,
-    onMoveSnake: PropTypes.func,
     onChangeDirection: PropTypes.func,
     gameComplete: PropTypes.bool,
     gameStarted: PropTypes.bool
@@ -94,13 +83,6 @@ const mapDispatchToProps = dispatch => {
     return {
         onChangeDirection: (direction) => {
             dispatch(moveSnake(direction));
-        },
-        onMoveSnake: () => {
-            dispatch(moveSnake());
-        },
-        onInitGame: (gameId) => {
-            dispatch(initGame(gameId));
-            dispatch(fetchHighScoreList);
         }
     }
 }

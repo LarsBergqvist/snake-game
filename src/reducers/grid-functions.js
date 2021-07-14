@@ -28,12 +28,19 @@ export function generateGrid(size, snake, food) {
     return newGrid;
 }
 
-export function getNewFoodPos(size, snake) {
+export function getNewFoodPos(size, snake, currentPoints) {
+    let fromBorder = 3;
+    if (currentPoints > 30) {
+        fromBorder = 1;
+    } else if (currentPoints > 20) {
+        fromBorder = 2
+    }
+    console.log('from border: ', fromBorder);
     let validPosFound = false;
     let newPos = undefined;
     while (!validPosFound) {
-        const x = Math.floor(Math.random() * (size - 2) + 1);
-        const y = Math.floor(Math.random() * (size - 2) + 1);
+        const x = Math.floor(Math.random() * (size - fromBorder * 2) + fromBorder);
+        const y = Math.floor(Math.random() * (size - fromBorder * 2) + fromBorder);
         let idx = snake.findIndex(pos => pos.x === x && pos.y === y);
         if (idx === -1) {
             validPosFound = true;

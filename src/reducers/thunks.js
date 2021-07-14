@@ -1,7 +1,18 @@
 import {
     HIGHSCORE_LIST_LOADED,
     HIGHSCORE_LIST_SAVED,
+    moveSnake,
 } from './actions';
+
+export async function runGameLoop(dispatch, getState) {
+    let interval = setInterval(() => {
+        if (getState().gameComplete) {
+            clearInterval(interval);
+        } else {
+            dispatch(moveSnake());
+        }
+    }, 100);
+}
 
 export async function fetchHighScoreList(dispatch, getState) {
     if (process.env.REACT_APP_APIURL.length === 0) {
