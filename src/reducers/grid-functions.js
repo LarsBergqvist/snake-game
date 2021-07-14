@@ -35,7 +35,6 @@ export function getNewFoodPos(size, snake, currentPoints) {
     } else if (currentPoints > 20) {
         fromBorder = 2
     }
-    console.log('from border: ', fromBorder);
     let validPosFound = false;
     let newPos = undefined;
     while (!validPosFound) {
