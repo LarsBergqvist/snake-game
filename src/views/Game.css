@@ -57,11 +57,6 @@
 }
 
 .tile {
-    /*
-  outline: 1px solid gray;
-  outline-offset: -1px;
-  */
-
   overflow: hidden;
   width: 100%;
   padding-top: 100%;

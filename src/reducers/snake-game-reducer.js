@@ -3,7 +3,8 @@ import {
     HIGHSCORE_LIST_LOADED,
     NAME_CHANGED,
     HIGHSCORE_LIST_SAVED,
-    MOVE_SNAKE
+    MOVE_SNAKE,
+    CHANGE_DIRECTION
 } from './actions';
 import { getIndexInHighScoreList } from './highscore-functions';
 import { generateGrid, isValidMove, getNextHeadPosition, getNewFoodPos } from './grid-functions';
@@ -26,7 +27,8 @@ const initialState = {
     highScorePosition: -1,
     userName: undefined,
     userId: undefined,
-    highScoreListSaved: false
+    highScoreListSaved: false,
+    directionsQueue: []
 };
 
 
@@ -53,17 +55,35 @@ function snakeGame(state = initialState, action) {
             });
         }
 
+        case CHANGE_DIRECTION: {
+            if (action.direction === state.directionsQueue[0]) {
+                // Ignore multiple identical directions
+                return state;
+            }
+
+            // Keep the last 3 direction actions
+            let directionsQueue = [...state.directionsQueue];
+            if (directionsQueue.length >= 3) {
+                directionsQueue.pop();
+            }
+            directionsQueue.push(action.direction);
+
+            return Object.assign({}, state, { directionsQueue });
+        }
+
         case MOVE_SNAKE: {
             if (state.gameComplete || !state.gameStarted) {
                 return state;
             }
 
+            let directionsQueue = [...state.directionsQueue];
+            let newDirection = directionsQueue.shift();
             let direction = state.direction;
-            if (action.direction) {
-                if (isValidMove(state.direction, action.direction)) {
-                    direction = action.direction;
+            if (newDirection) {
+                if (isValidMove(direction, newDirection)) {
+                    direction = newDirection;
                 } else {
-                    return state;
+                    return Object.assign({}, state, { directionsQueue });
                 }
             }
             const snake = [...state.snake];
@@ -84,18 +104,20 @@ function snakeGame(state = initialState, action) {
                         return Object.assign({}, state, {
                             highScorePosition: idxInHighScoreList + 1,
                             gameComplete: true,
-                            userId: newUserId
+                            userId: newUserId,
+                            directionsQueue
                         });
                     } else {
                         // User dit not make it into the leaderboard
                         return Object.assign({}, state, {
                             highScorePosition: idxInHighScoreList + 1,
                             gameComplete: true,
+                            directionsQueue
                         });
                     }
                 }
 
-                return Object.assign({}, state, { gameComplete: true });
+                return Object.assign({}, state, { gameComplete: true, directionsQueue });
             }
 
             let gameLoopInterval = state.gameLoopInterval;
@@ -114,7 +136,7 @@ function snakeGame(state = initialState, action) {
             let food = foodWasTaken ? getNewFoodPos(state.size, snake, state.points) : Object.assign({}, state.food);
 
             const newTiles = generateGrid(state.size, snake, food);
-            return Object.assign({}, state, { snake, gridViewModel: newTiles, food, points, direction, gameLoopInterval });
+            return Object.assign({}, state, { snake, gridViewModel: newTiles, food, points, direction, directionsQueue, gameLoopInterval });
         }
         case HIGHSCORE_LIST_LOADED: {
             return Object.assign({}, state, {

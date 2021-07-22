@@ -4,7 +4,7 @@ import { Down, GridWidth, Left, Right, Up } from '../constants';
 import TileView from './TileView'
 import PropTypes from 'prop-types';
 import { useSwipeable } from 'react-swipeable';
-import { moveSnake } from '../reducers/actions';
+import { changeDirection, moveSnake } from '../reducers/actions';
 
 const Grid = (props) => {
     const tileWidth = GridWidth / props.size;
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onChangeDirection: (direction) => {
-            dispatch(moveSnake(direction));
+            dispatch(changeDirection(direction));
         },
     }
 }

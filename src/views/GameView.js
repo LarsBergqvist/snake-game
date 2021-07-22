@@ -1,7 +1,7 @@
 import React from 'react';
 import './Game.css';
 import { connect } from 'react-redux'
-import { moveSnake } from '../reducers/actions';
+import { changeDirection, moveSnake } from '../reducers/actions';
 import GameStatusView from './GameStatusView';
 import { Down, Left, Right, Up } from '../constants';
 import GridView from './GridView';
@@ -75,7 +75,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onChangeDirection: (direction) => {
-            dispatch(moveSnake(direction));
+            dispatch(changeDirection(direction));
         }
     }
 }
