@@ -34,7 +34,7 @@ const GameStatus = (props) => {
             Score: <b>{props.points}</b>
             <div className='game-instructions'>
                 <div>
-                    Use swipe or arrow keys change direction
+                    Use swipe or arrow keys to change direction
                 </div>
             </div>
         </div>

@@ -16,8 +16,8 @@ const Grid = (props) => {
     }
 
     let config = {
-        delta: 5,                            // min distance(px) before a swipe starts
-        preventDefaultTouchmoveEvent: true,  // call e.preventDefault *See Details*
+        delta: 5,                             // min distance(px) before a swipe starts
+        preventDefaultTouchmoveEvent: true,   // call e.preventDefault *See Details*
         trackTouch: true,                     // track touch input
         trackMouse: false,                    // track mouse input
         rotationAngle: 0,                     // set a rotation angle
@@ -47,16 +47,13 @@ const Grid = (props) => {
 }
 
 Grid.propTypes = {
-    onTileClicked: PropTypes.func,
     size: PropTypes.number,
     gridViewModel: PropTypes.array,
-    imageNumber: PropTypes.number,
     onChangeDirection: PropTypes.func
 };
 
 const mapStateToProps = state => {
     return {
-        imageNumber: state.imageNumber,
         gridViewModel: state.gridViewModel,
         size: state.size,
     }

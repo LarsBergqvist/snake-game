@@ -14,7 +14,7 @@ class Game extends React.Component {
         super(props);
     }
     componentDidMount() {
-        const handleOnKeyPress = (event) => {
+        const handleOnKeyDown = (event) => {
             switch (event.keyCode) {
                 case 38: {
                     this.props.onChangeDirection(Up);
@@ -37,12 +37,8 @@ class Game extends React.Component {
                 event.preventDefault();
             }
         }
-        document.addEventListener('keydown', handleOnKeyPress, false);
+        document.addEventListener('keydown', handleOnKeyDown, false);
     }
-
-    componentWillUnmount() {
-    }
-
 
     render() {
         return (
@@ -52,7 +48,6 @@ class Game extends React.Component {
                 <GridView />
             </div>
         );
-
     }
 }
 
@@ -63,7 +58,6 @@ Game.defaultProps = {
 
 Game.propTypes = {
     gameName: PropTypes.string,
-    highScoreList: PropTypes.object,
     onChangeDirection: PropTypes.func,
     gameComplete: PropTypes.bool,
     gameStarted: PropTypes.bool
@@ -73,7 +67,6 @@ Game.propTypes = {
 const mapStateToProps = state => {
     return {
         gameName: state.gameName,
-        highScoreList: state.highScoreList,
         gameComplete: state.gameComplete,
         gameStarted: state.gameStarted
     }

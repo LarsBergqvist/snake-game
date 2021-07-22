@@ -20,9 +20,8 @@ const getStyleForTile = (id) => {
             outlineOffset: '-1px'
         };
     } else if (id >= Id_SnakeSegMin) {
-        let a = Math.max(0.2, 1.0 / ((id - 2) * 0.6))
         return {
-            backgroundColor: `rgba(0,0,0, ${a})`
+            backgroundColor: `rgba(0,0,0, ${Math.max(0.2, 1.0 / ((id - 2) * 0.6))})`
         };
     } else if (id === Id_Food) {
         return {

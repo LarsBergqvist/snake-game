@@ -11,3 +11,5 @@
 ```
 <p>Try it out live here: https://larsbergqvist.github.io/snake-game  
 <p>This is a simple snake game implemented in React with Redux as state container  
+
+![Alt text](https://github.com/LarsBergqvist/snake-game/blob/main/snake-game.gif?raw=true 'Snake game')  
