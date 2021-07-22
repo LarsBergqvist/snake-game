@@ -1,7 +1,7 @@
 import React from 'react';
 import './Game.css';
 import { connect } from 'react-redux'
-import { changeDirection, moveSnake } from '../reducers/actions';
+import { changeDirection } from '../reducers/actions';
 import GameStatusView from './GameStatusView';
 import { Down, Left, Right, Up } from '../constants';
 import GridView from './GridView';
