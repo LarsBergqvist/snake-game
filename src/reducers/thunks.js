@@ -2,6 +2,7 @@ import {
     HIGHSCORE_LIST_LOADED,
     HIGHSCORE_LIST_SAVED,
     moveSnake,
+    NAME_SUBMITTED
 } from './actions';
 
 export async function runGameLoop(dispatch, getState) {
@@ -39,9 +40,13 @@ export async function updateHighScoreList(dispatch, getState) {
 
     var state = getState();
 
-    if (!state.userName || state.userName.length === 0) {
+    if (!state.userName || state.userName.length === 0 || state.nameSubmitted) {
         return;
     }
+
+    dispatch({
+        type: NAME_SUBMITTED
+    });
 
     let body = {
         userName: state.userName,

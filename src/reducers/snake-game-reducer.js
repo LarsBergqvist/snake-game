@@ -4,7 +4,8 @@ import {
     NAME_CHANGED,
     HIGHSCORE_LIST_SAVED,
     MOVE_SNAKE,
-    CHANGE_DIRECTION
+    CHANGE_DIRECTION,
+    NAME_SUBMITTED
 } from './actions';
 import { getIndexInHighScoreList } from './highscore-functions';
 import { generateGrid, isValidMove, getNextHeadPosition, getNewFoodPos } from './grid-functions';
@@ -28,7 +29,8 @@ const initialState = {
     userName: undefined,
     userId: undefined,
     highScoreListSaved: false,
-    directionsQueue: []
+    directionsQueue: [],
+    nameSubmitted: false
 };
 
 
@@ -51,7 +53,8 @@ function snakeGame(state = initialState, action) {
                 food: newFoodPos,
                 gridViewModel: generateGrid(gameConfigs[action.gameId].size, snake, newFoodPos),
                 gameStarted: true,
-                snake
+                snake,
+                nameSubmitted: false
             });
         }
 
@@ -147,6 +150,11 @@ function snakeGame(state = initialState, action) {
             return Object.assign({}, state, {
                 userName: action.name
             });
+        }
+        case NAME_SUBMITTED: {
+            return Object.assign({}, state,
+                { nameSubmitted: true }
+            );
         }
         case HIGHSCORE_LIST_SAVED: {
             return Object.assign({}, state, {
