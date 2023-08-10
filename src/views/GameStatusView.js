@@ -27,6 +27,11 @@ const GameStatus = (props) => {
                     userId={props.userId}
                 />
             }
+            {(props.highScorePosition == 0) &&
+                <LeaderBoardView
+                    highScoreList={props.highScoreList}
+                />
+            }
             <button className='game-button' onClick={() => props.onInitGame(GameId_Medium)}>Restart</button>
         </div>;
     } else {

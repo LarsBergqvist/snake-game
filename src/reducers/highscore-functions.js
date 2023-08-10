@@ -1,9 +1,9 @@
 
 function compareScores(a, b) {
-    if (a.score >= b.score) {
+    if (a.score > b.score) {
         return -1;
     }
-    if (a.score < b.score) {
+    if (a.score <= b.score) {
         return 1;
     }
 }
