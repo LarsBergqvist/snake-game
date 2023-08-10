@@ -1,9 +1,9 @@
 
 function compareScores(a, b) {
-    if (a.score > b.score) {
+    if (a.score >= b.score) {
         return -1;
     }
-    if (a.score <= b.score) {
+    if (a.score < b.score) {
         return 1;
     }
 }
@@ -22,7 +22,6 @@ export function getIndexInHighScoreList(newUserId, score, highScoreList) {
     });
 
     resultsCopy.sort((a, b) => compareScores(a, b));
-
     let idxInHighScoreList = resultsCopy.findIndex(r => r.id === newUserId);
     if (idxInHighScoreList > -1 && (idxInHighScoreList + 1 <= highScoreList.maxSize)) {
         return idxInHighScoreList;
