@@ -67,16 +67,9 @@
   margin: auto;
 }
 
-.full-image {
-  overflow: hidden;
-  margin: auto;
-  padding: 20px;
-  width: 300px;
-}
-
-.full-image .img {
-  max-width: initial;
-}
+.grid-wrapper {
+    height: 80vh;
+  }
 
 .highscoretable {
   margin: 0;

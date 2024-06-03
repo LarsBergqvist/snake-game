@@ -32,15 +32,17 @@ const Grid = (props) => {
     });
 
     return (
-        <div {...handlers} className='tile-wrapper' style={tileWrapperStyle}>
-            <div className='tile-container' style={tileContainerStyle}>
-                {
-                    props.gridViewModel.map((t, idx) => {
-                        return <TileView key={idx}
-                            id={t}
-                        />
-                    })
-                }
+        <div {...handlers} className="grid-wrapper">
+            <div className='tile-wrapper' style={tileWrapperStyle}>
+                <div className='tile-container' style={tileContainerStyle}>
+                    {
+                        props.gridViewModel.map((t, idx) => {
+                            return <TileView key={idx}
+                                id={t}
+                            />
+                        })
+                    }
+                </div>
             </div>
         </div>
     );
