@@ -7,7 +7,7 @@
     git clone https://github.com/LarsBergqvist/snake-game
     cd snake-game
     yarn install
-    yarn start
+    yarn run dev
 ```
 <p>Try it out live here: https://larsbergqvist.github.io/snake-game  
 <p>This is a simple snake game implemented in React with Redux as state container  
