@@ -1,5 +1,6 @@
 import { Id_Border, Id_Food, Id_SnakeSegMin } from '../constants';
 import { generateGrid, getNewFoodPos } from './grid-functions'
+import { expect, test } from 'vitest'
 
 test('Should generate grid with snake and borders', () => {
     const size = 4;

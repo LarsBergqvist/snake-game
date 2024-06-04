@@ -1,4 +1,5 @@
 import { getIndexInHighScoreList } from './highscore-functions';
+import { expect, test } from 'vitest'
 
 test('Highscore position user should make it to leaderboard', () => {
     const highScoreList = {
