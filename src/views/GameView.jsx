@@ -10,9 +10,6 @@ import GameHeaderView from './GameHeaderView';
 
 class Game extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
         const handleOnKeyDown = (event) => {
             switch (event.keyCode) {
@@ -32,6 +29,8 @@ class Game extends React.Component {
                     this.props.onChangeDirection(Right);
                     break;
                 }
+                default:
+                    break;
             }
             if (!this.props.gameComplete && this.props.gameStarted) {
                 event.preventDefault();

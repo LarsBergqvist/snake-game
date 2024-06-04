@@ -27,7 +27,7 @@ const GameStatus = (props) => {
                     userId={props.userId}
                 />
             }
-            {(props.highScorePosition == 0) &&
+            {(props.highScorePosition === 0) &&
                 <LeaderBoardView
                     highScoreList={props.highScoreList}
                 />
