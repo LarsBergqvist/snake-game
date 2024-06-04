@@ -2,6 +2,6 @@ export const gameConfigs = [
     {
         'name': 'Snake Game',
         'size': 30,
-        'highscorelistid': process.env.REACT_APP_HIGHSCORELISTID_SNAKEGAME0
+        'highscorelistid': import.meta.env.VITE_HIGHSCORELISTID_SNAKEGAME0
     }
 ]
