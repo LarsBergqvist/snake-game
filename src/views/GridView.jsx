@@ -17,8 +17,7 @@ const Grid = (props) => {
 
     let config = {
         delta: 5,                             // min distance(px) before a swipe starts
-        preventScrollOnSwipe: true,
-        preventDefaultTouchmoveEvent: true,   // call e.preventDefault *See Details*
+        preventScrollOnSwipe: props.gameComplete,
         trackTouch: true,                     // track touch input
         trackMouse: false,                    // track mouse input
         rotationAngle: 0,                     // set a rotation angle
@@ -59,6 +58,8 @@ const mapStateToProps = state => {
     return {
         gridViewModel: state.gridViewModel,
         size: state.size,
+        gameStarted: state.gameStarted,
+        gameComplete: state.gameComplete
     }
 }
 

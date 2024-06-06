@@ -85,8 +85,6 @@ function snakeGame(state = initialState, action) {
             if (newDirection) {
                 if (isValidMove(direction, newDirection)) {
                     direction = newDirection;
-                } else {
-                    return Object.assign({}, state, { directionsQueue });
                 }
             }
             const snake = [...state.snake];

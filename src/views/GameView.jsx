@@ -50,11 +50,6 @@ class Game extends React.Component {
     }
 }
 
-Game.defaultProps = {
-    gameStarted: false,
-    gameComplete: false
-}
-
 Game.propTypes = {
     gameName: PropTypes.string,
     onChangeDirection: PropTypes.func,

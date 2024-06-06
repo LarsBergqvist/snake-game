@@ -46,10 +46,6 @@ const GameStatus = (props) => {
     }
 }
 
-GameStatus.defaultProps = {
-    gameStarted: false
-}
-
 GameStatus.propTypes = {
     points: PropTypes.number,
     gameComplete: PropTypes.bool,
