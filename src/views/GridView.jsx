@@ -17,6 +17,7 @@ const Grid = (props) => {
 
     let config = {
         delta: 5,                             // min distance(px) before a swipe starts
+        preventScrollOnSwipe: true,
         preventDefaultTouchmoveEvent: true,   // call e.preventDefault *See Details*
         trackTouch: true,                     // track touch input
         trackMouse: false,                    // track mouse input
